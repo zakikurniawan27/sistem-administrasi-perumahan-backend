@@ -3,7 +3,7 @@ const { rumah } = require("../models");
 const addRumah = async (req, res) => {
   try {
     const {
-      penghuni_id,
+      penghuniId,
       nomor_rumah,
       status_hunian,
       status_pembayaran,
@@ -11,7 +11,7 @@ const addRumah = async (req, res) => {
     } = req.body;
 
     if (
-      !penghuni_id ||
+      !penghuniId ||
       !nomor_rumah ||
       !status_hunian ||
       !status_pembayaran ||
@@ -24,7 +24,7 @@ const addRumah = async (req, res) => {
     }
 
     await rumah.create({
-      penghuni_id,
+      penghuniId,
       nomor_rumah,
       status_hunian,
       status_pembayaran,
@@ -43,4 +43,22 @@ const addRumah = async (req, res) => {
   }
 };
 
-module.exports = { addRumah };
+const getDataRumah = async (req, res) => {
+  try {
+    const data = await rumah.findAll();
+
+    return res.status(200).send({
+      status: 200,
+      message: "get data rumah success",
+      rumah: data,
+    });
+  } catch (error) {
+    return res.status(404).send({
+      status: 404,
+      message: "get data rumah failed",
+      error,
+    });
+  }
+};
+
+module.exports = { addRumah, getDataRumah };
