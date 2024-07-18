@@ -1,14 +1,21 @@
-const { penghuni } = require("../models");
+const { penghunis } = require("../models");
+const { rumahs } = require("../models/rumah");
 
 const addPenghuni = async (req, res) => {
   try {
-    const { nama_lengkap, status_hunian, nomor_telepon, status_pernikahan } =
-      req.body;
+    const {
+      nama_lengkap,
+      status_hunian,
+      nomor_telepon,
+      status_pernikahan,
+      rumahId,
+    } = req.body;
     if (
       !nama_lengkap ||
       !status_hunian ||
       !nomor_telepon ||
-      !status_pernikahan
+      !status_pernikahan ||
+      !rumahId
     ) {
       return res.status(400).send({
         status: 400,
@@ -16,12 +23,13 @@ const addPenghuni = async (req, res) => {
       });
     }
 
-    await penghuni.create({
+    await penghunis.create({
       nama_lengkap,
       foto_ktp: req.file.path,
       status_hunian,
       nomor_telepon,
       status_pernikahan,
+      rumahId,
     });
 
     return res.status(201).send({
@@ -38,7 +46,7 @@ const addPenghuni = async (req, res) => {
 
 const getDataPenghuni = async (req, res) => {
   try {
-    const data = await penghuni.findAll();
+    const data = await penghunis.findAll();
 
     return res.status(200).send({
       status: 200,
@@ -56,7 +64,7 @@ const getDataPenghuni = async (req, res) => {
 const getDetailDataPenghuni = async (req, res) => {
   try {
     const idPenghuni = req.params.id;
-    const data = await penghuni.findByPk(idPenghuni);
+    const data = await penghunis.findByPk(idPenghuni);
 
     return res.status(200).send({
       status: 200,
@@ -67,6 +75,7 @@ const getDetailDataPenghuni = async (req, res) => {
     return res.status(404).send({
       status: 404,
       message: "get detail data penghuni failed",
+      error,
     });
   }
 };
@@ -77,7 +86,7 @@ const updateDataPenghuni = async (req, res) => {
     const { nama_lengkap, status_hunian, nomor_telepon, status_pernikahan } =
       req.body;
 
-    await penghuni.update(
+    await penghunis.update(
       {
         nama_lengkap,
         foto_ktp: req.file.path,
