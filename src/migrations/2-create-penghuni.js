@@ -29,6 +29,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      rumahId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "rumahs",
+          key: "id",
+        },
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
