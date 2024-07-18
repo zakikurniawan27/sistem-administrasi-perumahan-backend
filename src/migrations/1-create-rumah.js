@@ -9,14 +9,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      penghuniId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: "penghunis",
-          key: "id",
-        },
-      },
       nomor_rumah: {
         type: Sequelize.STRING,
         allowNull: false,
