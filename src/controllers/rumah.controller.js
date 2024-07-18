@@ -2,21 +2,10 @@ const { rumah } = require("../models");
 
 const addRumah = async (req, res) => {
   try {
-    const {
-      penghuniId,
-      nomor_rumah,
-      status_hunian,
-      status_pembayaran,
-      blok_rumah,
-    } = req.body;
+    const { nomor_rumah, status_hunian, status_pembayaran, blok_rumah } =
+      req.body;
 
-    if (
-      !penghuniId ||
-      !nomor_rumah ||
-      !status_hunian ||
-      !status_pembayaran ||
-      !blok_rumah
-    ) {
+    if (!nomor_rumah || !status_hunian || !status_pembayaran || !blok_rumah) {
       return res.status(400).send({
         status: 400,
         message: "field must not be empty",
@@ -24,7 +13,6 @@ const addRumah = async (req, res) => {
     }
 
     await rumah.create({
-      penghuniId,
       nomor_rumah,
       status_hunian,
       status_pembayaran,
