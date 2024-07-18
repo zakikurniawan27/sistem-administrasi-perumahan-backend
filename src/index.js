@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
-const router = require("./routes/router");
+const penghuniRouter = require("./routes/penghuni.route");
 const { sequelize } = require("./models");
 
 const app = express();
@@ -21,7 +21,7 @@ sequelize
     console.log("connection error", error);
   });
 
-app.use("/", router);
+app.use("/api/v1/penghuni", penghuniRouter);
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log("Server Running");
