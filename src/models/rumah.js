@@ -9,14 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       rumah.belongsTo(models.penghuni, {
-        foreignKey: "penghuni_id",
+        foreignKey: "penghuniId",
         as: "penghuni",
       });
     }
   }
   rumah.init(
     {
-      penghuni_id: DataTypes.INTEGER,
+      penghuniId: DataTypes.INTEGER,
       nomor_rumah: DataTypes.STRING,
       status_hunian: DataTypes.STRING,
       status_pembayaran: DataTypes.STRING,
