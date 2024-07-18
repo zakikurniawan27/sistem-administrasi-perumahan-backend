@@ -7,6 +7,7 @@ const { upload } = require("../middlewares/upload");
 
 const router = express.Router();
 
+router.get("/", getDataPenghuni);
 router.post("/tambahPenghuni", upload.single("foto_ktp"), addPenghuni);
 
 module.exports = router;

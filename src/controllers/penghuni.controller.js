@@ -37,4 +37,21 @@ const addPenghuni = async (req, res) => {
   }
 };
 
-module.exports = { addPenghuni };
+const getDataPenghuni = async (req, res) => {
+  try {
+    const data = await penghuni.findAll();
+
+    return res.status(200).send({
+      status: 200,
+      message: "get data penghuni success",
+      penghuni: data,
+    });
+  } catch (error) {
+    return res.status(404).send({
+      status: 404,
+      message: "get data penghuni failed",
+    });
+  }
+};
+
+module.exports = { addPenghuni, getDataPenghuni };
