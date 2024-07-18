@@ -1,4 +1,4 @@
-const { rumah } = require("../models");
+const { rumahs } = require("../models");
 
 const addRumah = async (req, res) => {
   try {
@@ -12,7 +12,7 @@ const addRumah = async (req, res) => {
       });
     }
 
-    await rumah.create({
+    await rumahs.create({
       nomor_rumah,
       status_hunian,
       status_pembayaran,
@@ -27,13 +27,14 @@ const addRumah = async (req, res) => {
     return res.status(404).send({
       status: 404,
       message: "Create rumah failed",
+      error,
     });
   }
 };
 
 const getDataRumah = async (req, res) => {
   try {
-    const data = await rumah.findAll();
+    const data = await rumahs.findAll();
 
     return res.status(200).send({
       status: 200,
@@ -49,4 +50,30 @@ const getDataRumah = async (req, res) => {
   }
 };
 
-module.exports = { addRumah, getDataRumah };
+const getDetailDataRumah = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await rumahs.findByPk(id, {
+      include: [
+        {
+          association: "penghuni",
+          where: { rumahId: id },
+        },
+      ],
+    });
+
+    return res.status(200).send({
+      status: 200,
+      message: "get detail data rumah success",
+      detail: data,
+    });
+  } catch (error) {
+    return res.status(404).send({
+      status: 404,
+      message: "get detail data rumah failed",
+      error,
+    });
+  }
+};
+
+module.exports = { addRumah, getDataRumah, getDetailDataRumah };
