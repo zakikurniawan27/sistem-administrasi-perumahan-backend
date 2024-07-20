@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       nomor_rumah: DataTypes.STRING,
       status_hunian: DataTypes.STRING,
-      status_pembayaran: DataTypes.STRING,
       blok_rumah: DataTypes.STRING,
     },
     {

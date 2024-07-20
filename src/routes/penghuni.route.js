@@ -4,6 +4,7 @@ const {
   getDataPenghuni,
   getDetailDataPenghuni,
   updateDataPenghuni,
+  download,
 } = require("../controllers/penghuni.controller");
 const { upload } = require("../middlewares/upload");
 
@@ -17,5 +18,6 @@ router.put(
   upload.single("foto_ktp"),
   updateDataPenghuni
 );
+router.get("/file/:name", download);
 
 module.exports = router;

@@ -107,13 +107,27 @@ const updateDataPenghuni = async (req, res) => {
     return res.status(404).send({
       status: 404,
       message: "update data penghuni failed",
+      error,
     });
   }
 };
 
+const download = (req, res) => {
+  const fileName = req.params.name;
+  const directoryPath = __basedir + "/src/middlewares/uploads";
+
+  res.download(directoryPath + fileName, fileName, (err) => {
+    if (err) {
+      res.status(500).send({
+        message: "could not download the file",
+      });
+    }
+  });
+};
 module.exports = {
   addPenghuni,
   getDataPenghuni,
   getDetailDataPenghuni,
   updateDataPenghuni,
+  download,
 };
