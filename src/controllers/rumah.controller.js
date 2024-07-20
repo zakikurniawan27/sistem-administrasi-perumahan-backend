@@ -1,11 +1,11 @@
 const { rumahs } = require("../models");
+const { penghunis } = require("../models");
 
 const addRumah = async (req, res) => {
   try {
-    const { nomor_rumah, status_hunian, status_pembayaran, blok_rumah } =
-      req.body;
+    const { nomor_rumah, blok_rumah } = req.body;
 
-    if (!nomor_rumah || !status_hunian || !status_pembayaran || !blok_rumah) {
+    if (!nomor_rumah || !blok_rumah) {
       return res.status(400).send({
         status: 400,
         message: "field must not be empty",
@@ -14,8 +14,6 @@ const addRumah = async (req, res) => {
 
     await rumahs.create({
       nomor_rumah,
-      status_hunian,
-      status_pembayaran,
       blok_rumah,
     });
 
@@ -34,7 +32,7 @@ const addRumah = async (req, res) => {
 
 const getDataRumah = async (req, res) => {
   try {
-    const data = await rumahs.findAll();
+    const data = await rumahs.findAll({ include: { association: "penghuni" } });
 
     return res.status(200).send({
       status: 200,
@@ -76,4 +74,66 @@ const getDetailDataRumah = async (req, res) => {
   }
 };
 
-module.exports = { addRumah, getDataRumah, getDetailDataRumah };
+const updateRumah = async (req, res) => {
+  try {
+    const idRumah = req.params.id;
+    const { nomor_rumah, status_hunian, blok_rumah } = req.body;
+
+    await rumahs.update(
+      {
+        nomor_rumah,
+        status_hunian,
+        blok_rumah,
+      },
+      {
+        where: { id: idRumah },
+      }
+    );
+
+    return res.status(201).send({
+      status: 201,
+      message: "update data rumah success",
+    });
+  } catch (error) {
+    return res.status(404).send({
+      status: 404,
+      message: "update data rumah failed",
+      error,
+    });
+  }
+};
+
+const updateStatusHunian = async (req, res) => {
+  try {
+    const idRumah = req.params.id;
+    const { status_hunian } = req.body;
+
+    await rumahs.update(
+      {
+        status_hunian,
+      },
+      {
+        where: { id: idRumah },
+      }
+    );
+
+    return res.status(201).send({
+      status: 201,
+      message: "update data rumah success",
+    });
+  } catch (error) {
+    return res.status(404).send({
+      status: 404,
+      message: "update data rumah failed",
+      error,
+    });
+  }
+};
+
+module.exports = {
+  addRumah,
+  getDataRumah,
+  getDetailDataRumah,
+  updateRumah,
+  updateStatusHunian,
+};

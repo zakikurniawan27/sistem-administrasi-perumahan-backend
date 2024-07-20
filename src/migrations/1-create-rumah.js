@@ -16,10 +16,7 @@ module.exports = {
       status_hunian: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
-      status_pembayaran: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        defaultValue: "TIDAK DIHUNI",
       },
       blok_rumah: {
         type: Sequelize.STRING,
