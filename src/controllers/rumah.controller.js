@@ -52,12 +52,11 @@ const getDetailDataRumah = async (req, res) => {
   try {
     const { id } = req.params;
     const data = await rumahs.findByPk(id, {
-      include: [
-        {
-          association: "penghuni",
-          where: { rumahId: id },
-        },
-      ],
+      include: {
+        association: "penghuni",
+        where: { rumahId: id },
+        include: { association: "bayar", include: { association: "bulan" } },
+      },
     });
 
     return res.status(200).send({
